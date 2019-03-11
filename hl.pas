@@ -4,6 +4,6 @@ var
 	idade: integer;
  
  begin
- 	idade := 125;
+ 	idade := 789;
  	writeln(idade);
  end.
