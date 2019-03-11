@@ -9,7 +9,7 @@ begin
 	writeln('Numero: ');
 	read (limite);
 
-	for i:= 500 to 510 do writeln(i);
+	for i:= 1 to 13 do writeln(i);
 
 	while count < limite do
 	begin
