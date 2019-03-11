@@ -1,9 +1,9 @@
 program ola(output);
 
 var
-	idade: cardinal;
+	idade: integer;
  
  begin
- 	idade := 4000000000;
+ 	idade := 19;
  	writeln(idade);
  end.
