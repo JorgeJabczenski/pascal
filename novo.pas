@@ -6,7 +6,7 @@ procedure decToBin ();
 var 
 	numdtb : integer;
 	contador, i : byte;
-	bits : array[0..10] of integer; 
+	bits : array[0..10] of byte; 
 
 begin
 	writeln('');
@@ -21,7 +21,7 @@ begin
 		numdtb := numdtb div 2;
 	end;
 	for i:= contador downto 0 do
-	write(bits[i]);
+		write(bits[i]);
 	writeln('');
 	writeln('Conversao Encerrada') 
 end;
@@ -34,9 +34,37 @@ end;
 
 
 procedure binToDec();
+var
+	bits: array[0..10] of byte;
+	entrada: cardinal;
+	resultado:extended;
+	contador, i: byte;
+	r: integer;
+	
 
-	(*NAO TAO COMPLICADO PRA FAZER AGORA MAS É MUITO TRABALHOSO*) 
 begin
+	contador := 0;
+	resultado:= 0;
+	write('Digite um numero p/ a conversao:  ');
+	read(entrada);
+
+	while entrada > 0 do
+	begin
+		bits[contador] := entrada mod 10;
+		entrada := entrada div 10;
+		contador := contador + 1;
+	end;
+
+	for i:= 0 to contador-1 do
+	begin
+		resultado := resultado + exp(i*ln(2)) * bits[i];
+		//writeln(bits[i]);
+		//writeln('');
+
+	end;
+	write('O resultado em decimal eh:  ');
+	writeln(Trunc(resultado));
+	writeln('');
 end;
 
 procedure binToHex();
@@ -56,8 +84,6 @@ procedure hexToBin();
 	(*MUITO COMPLICADO PRA FAZER AGORA*) 
 begin
 end;
-
-
 
 
 var 
@@ -90,7 +116,7 @@ begin
 		5: hexToDec();
 
 		6: hexToBin();
-		
+
 		7: begin
 			write('Digite um numero p/ a conversao em decimal:  ');
 			readln(num);
