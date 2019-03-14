@@ -26,17 +26,39 @@ begin
 	writeln('Conversao Encerrada') 
 end;
 
+procedure decToHex();
+
+	(*NAO TAO COMPLICADO PRA FAZER AGORA MAS É MUITO TRABALHOSO*) 
+begin
+end;
+
+
+procedure binToDec();
+
+	(*NAO TAO COMPLICADO PRA FAZER AGORA MAS É MUITO TRABALHOSO*) 
+begin
+end;
+
 procedure binToHex();
 
 	(*MUITO COMPLICADO PRA FAZER AGORA*) 
 begin
 end;
 
-procedure decToHex();
+procedure hexToDec();
 
-	(*NAO TAO COMPLICADO PRA FAZER AGORA MAS É MUITO TRABALHOSO*) 
+	(*MUITO COMPLICADO PRA FAZER AGORA*) 
 begin
 end;
+
+procedure hexToBin();
+
+	(*MUITO COMPLICADO PRA FAZER AGORA*) 
+begin
+end;
+
+
+
 
 var 
 	base, num:integer;
@@ -61,15 +83,14 @@ begin
 
 		2: decToHex();
 
-		3: begin
-			end;
+		3: binToDec();
 
 		4: binToHex();
 
-		5: begin
-			end;
-		6: begin
-			end;
+		5: hexToDec();
+
+		6: hexToBin();
+		
 		7: begin
 			write('Digite um numero p/ a conversao em decimal:  ');
 			readln(num);
