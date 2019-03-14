@@ -32,6 +32,12 @@ procedure binToHex();
 begin
 end;
 
+procedure decToHex();
+
+	(*NAO TAO COMPLICADO PRA FAZER AGORA MAS É MUITO TRABALHOSO*) 
+begin
+end;
+
 var 
 	base, num:integer;
 	escolha: byte;
@@ -53,8 +59,8 @@ begin
 	case escolha of
 		1: decToBin();
 
-		2: begin
-			end;
+		2: decToHex();
+
 		3: begin
 			end;
 
