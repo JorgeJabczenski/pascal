@@ -26,6 +26,12 @@ begin
 	writeln('Conversao Encerrada') 
 end;
 
+procedure binToHex();
+
+	(*MUITO COMPLICADO PRA FAZER AGORA*) 
+begin
+end;
+
 var 
 	base, num:integer;
 	escolha: byte;
@@ -51,8 +57,9 @@ begin
 			end;
 		3: begin
 			end;
-		4: begin
-			end;
+
+		4: binToHex();
+
 		5: begin
 			end;
 		6: begin
