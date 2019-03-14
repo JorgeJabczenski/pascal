@@ -1,23 +1,75 @@
 program convert;
+type
+	vetor10bytes = array[0..10] of byte;
+
+procedure decToBin ();
 var 
-	num:integer;
-	base, result,modulo:integer;
+	numdtb : integer;
+	contador, i : byte;
+	bits : array[0..10] of integer; 
 
 begin
-	(*read(num);
-	read(base);
-	while (num/base) >= 0 do
+	writeln('');
+	contador:= 0;
+	write('Digite um numero p/ a conversao:  ');
+	read (numdtb);
+
+	while numdtb > 0 do
 	begin
-		write((num)mod(base));
-		num := int (num / base);
+		bits[contador] := numdtb mod 2;
+		contador := contador + 1;
+		numdtb := numdtb div 2;
 	end;
-	*)
-	read(num);
-	read(base);
-	result := int(num/base);
-	modulo := (num)mod(base);
+	for i:= contador downto 0 do
+	write(bits[i]);
+	writeln('');
+	writeln('Conversao Encerrada') 
+end;
 
+var 
+	base, num:integer;
+	escolha: byte;
+ 
 
-	writeln(result);
-	writeln(modulo);
+begin
+
+	writeln('Escolha de seu conversor:');
+	writeln('1 - Dec to Bin (10 bits)');
+	writeln('2 - Dec to Hex');
+	writeln('3 - Bin to Dec');
+	writeln('4 - Bin to Hex');
+	writeln('5 - Hex to Dec');
+	writeln('6 - Hex to Bin');
+	writeln('7 - Dec to Personalizado');
+
+	read(escolha);
+
+	case escolha of
+		1: decToBin();
+
+		2: begin
+			end;
+		3: begin
+			end;
+		4: begin
+			end;
+		5: begin
+			end;
+		6: begin
+			end;
+		7: begin
+			write('Digite um numero p/ a conversao em decimal:  ');
+			readln(num);
+			write('Digite a base nova:  ');
+			read(base);
+			while (num/base) > 0 do
+			begin
+				writeln((num)mod(base));
+				num := num div base;
+			end;
+		end;
+	else 
+		writeln('Escolha Invalida!');
+	end ;
+
 end.
