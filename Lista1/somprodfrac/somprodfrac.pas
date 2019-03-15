@@ -28,6 +28,6 @@ begin
     c := (c * mmc) div memd;
 
     writeln('A soma = ', a+c, '/', mmc);
-    writeln('O produto = ', mema * memc, '/',memb * memd);
+    write  ('O produto = ', mema * memc, '/',memb * memd);
     
 end.
