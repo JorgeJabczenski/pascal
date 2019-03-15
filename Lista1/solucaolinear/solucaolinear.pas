@@ -5,6 +5,7 @@ var
     det, det1, det2: single;
 
 begin
+    write('Entre com os seis valores na ordem exigida: ');
     read (a11,a12,b1, a21,a22, b2);
 
     det  := (a11 * a22) - (a12* a21);
