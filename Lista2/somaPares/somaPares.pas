@@ -4,10 +4,10 @@ var
     n, soma, num, aux: integer;
 begin
     soma := 0;
-    writeln ('Entre com o valor de n: ');
+    //writeln ('Entre com o valor de n: ');
     read(n);
     aux := n;
-    writeln ('Entre com a sequencia: ');
+    //writeln ('Entre com a sequencia: ');
     while n > 0 do 
     begin
         read(num);
@@ -18,5 +18,5 @@ begin
     if aux mod 2 = 0 then
         writeln('Soma: ', soma)
     else
-        writeln('impar');
+        writeln('Soma: impar');
 end.
