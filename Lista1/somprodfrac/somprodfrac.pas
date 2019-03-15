@@ -1,3 +1,5 @@
+
+(*
 program somprodfrac;
 
 var
@@ -29,5 +31,21 @@ begin
 
     writeln('A soma = ', a+c, '/', mmc);
     write  ('O produto = ', mema * memc, '/',memb * memd);
+    
+end.
+*)
+program somprodfrac;
+
+var
+    a, b, c, d: integer;
+
+begin
+    writeln('Entre com a e b: ');
+    read   (a,b);
+    writeln('Entre com c e d: ');
+    read   (c,d);
+
+    writeln('A soma = ', a*d + c*b, '/', b*d);
+    write  ('O produto = ', a * c, '/',b * d);
     
 end.
