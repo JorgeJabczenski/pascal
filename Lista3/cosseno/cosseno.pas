@@ -9,8 +9,27 @@ menor que 0,000001 (i.e., norma da diferença das normas de dois termos consecut
 
 program cosseno;
 
+function fatorial (n : integer) : integer;
 var
+	fat, i : integer;
 
 begin
-    
+	fat := 1;
+	for i := 1 to n do
+		fat := fat * i;
+
+	
+	n := fat;
+
+end;
+
+
+
+var
+	num, fato: integer;
+
+begin
+	read(num);
+	fato := fatorial(num);
+	writeln('Fatorial : ', fato); 
 end.
