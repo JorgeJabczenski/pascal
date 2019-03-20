@@ -9,7 +9,7 @@ menor que 0,000001 (i.e., norma da diferença das normas de dois termos consecut
 
 program cosseno;
 
-function fatorial (n : integer) : integer;
+function fatorial (n : integer) : extended;
 var
 	fat, i : integer;
 
@@ -17,19 +17,50 @@ begin
 	fat := 1;
 	for i := 1 to n do
 		fat := fat * i;
-
-	
-	n := fat;
+	fatorial := 1 / fat;
 
 end;
 
 
 
 var
-	num, fato: integer;
+	fato, anterior, soma: extended;
+	num, i, contador, repetir : integer;
 
 begin
-	read(num);
-	fato := fatorial(num);
-	writeln('Fatorial : ', fato); 
-end.
+	contador := 0;
+	soma := 1;
+	num := 2;
+	fato := 1;
+	anterior := 0.25;
+	repetir := 1;
+
+
+	while (repetir = 1) do
+	begin
+
+		fato := fatorial(num);
+		writeln;
+		writeln('Fatorial de 1/',num,' : ',fato:0:15);
+		writeln ('Diferenca : ',fato - anterior:0:6);
+		writeln ('Contador : ',contador);
+		writeln;
+
+		if abs(fato - anterior) > 0.000001 then
+		begin
+
+			if odd(contador) then
+				soma := soma + fato
+			else
+				soma := soma - fato; 
+		end
+		else 
+			break;
+
+		anterior := fato;
+		contador := contador + 1;
+		num := num + 2;
+
+	end; // end while
+	writeln(soma:0:15);
+end. // end 
