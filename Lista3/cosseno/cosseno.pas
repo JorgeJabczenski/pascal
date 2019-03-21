@@ -21,8 +21,6 @@ begin
 
 end;
 
-
-
 var
 	fato, anterior, soma: extended;
 	num, i, contador, repetir : integer;
