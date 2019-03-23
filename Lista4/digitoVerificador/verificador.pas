@@ -18,10 +18,8 @@ begin
     //writeln(soma);
   end;
   
-
   if (verificador = (soma mod 10)) then 
    writeln('SIM')
   else
     writeln('NAO');
-  
 end.

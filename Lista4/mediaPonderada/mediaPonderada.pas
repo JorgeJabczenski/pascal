@@ -5,12 +5,8 @@ var
     n, result, mediaTotal : real;
 
 begin
-
     somaP:= 0; result := 0;
-
-
     read(m);
-
     if (m > 0) then 
     begin
         while(m > 0) do 
@@ -21,7 +17,6 @@ begin
             m := m - 1;
         end; // end while
 
-
         if (somaP > 0) then 
         begin
             mediaTotal := result / somaP;
@@ -29,7 +24,6 @@ begin
         end // end if somaP > 0
         else 
             writeln('divisao por zero');
-             
     end // end if m > 0
     else 
         writeln('divisao por zero');
