@@ -1,17 +1,20 @@
 program ordenacaoPersonas;
 
+const
+    Nzao = 10;
+
 var
-    personas: array [1..101] of integer;
+    personas: array [1..Nzao] of integer;
     temporario, n, c: integer;
     vezes : longint;
 
 begin
-    n:= 100;
+    n:= Nzao;
     vezes := 0;
     randomize;
 
     // Gerar 100 datas aleatórias
-    for c:= 1 to 100 do 
+    for c:= 1 to Nzao do 
         personas[c] := random(101) + 1900;
 
     // bubble sort
@@ -32,7 +35,7 @@ begin
         n := n-1;
     end;
 
-    for c := 0 to 100 do 
+    for c := 1 to Nzao do 
      write(personas[c],' ');
 
     writeln;
