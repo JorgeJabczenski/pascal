@@ -6,9 +6,7 @@ var
     repetido : boolean;
 
 begin
-    count := 0;
-    ie:= 0;
-    io := 1;
+    count := 0; ie:= 0; io := 1;
 
     read(num);
     while(num <> 0) do 
@@ -17,10 +15,6 @@ begin
         entrada[ie] := num;
         read(num);
     end;
-
-    for num := 1 to ie do
-        saida[num] := 0;
-
 
     for num := 1 to ie do 
     begin
@@ -38,8 +32,6 @@ begin
                         break;
                     end;
                 end;
-
-
             end;
             count := count + 1;
         end;
