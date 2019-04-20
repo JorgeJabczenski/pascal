@@ -16,6 +16,7 @@ begin
     end;    
 end;
 
+(*
 procedure achaSequencia(v : vetor; s,n : longint);
 var 
     aux : vetor;
@@ -32,13 +33,35 @@ begin
         end;
         writeln;    
 
-        for j:= 1 to s do 
+        for c:= 1 to s+1 do
         begin
-            writeln(aux[j],'----',v[j+i]);
+            for j:= 1 to s do 
+            begin
+                writeln(aux[j],'----',v[j+c]);
+            end;
+        writeln;
         end;
-        
-        writeln('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+        writeln('__________________________________');
     end;
+end;
+*)
+
+function achaSequencia(v:vetor; s,t:longint): longint;
+var 
+    i: longint;
+    igual : boolean;
+
+begin
+    igual := true;
+    i := 1;
+    while((i + s) <= t) and igual do 
+    begin
+        if v[i] <> v[i+s] then 
+            igual := false; 
+    end;
+
+    //if igual then achaSequencia :=  else ach
+
 end;
 
 
