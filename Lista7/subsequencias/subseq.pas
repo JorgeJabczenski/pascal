@@ -1,106 +1,79 @@
-(*
-Faça um programa em Free Pascal que leia um número natural 0 < n ≤ 100 e em seguida leia uma 
-sequência de n números também naturais. Seu programa deve verificar se existem duas subsequências 
-guais nesta sequência com tamanho pelo menos 2. O tamanho da sequência encontrada deverá ser máximo,
- se ela existir. Caso exista, seu programa deve imprimir o valor do ı́ndice i e do tamanho máximo da 
- sequência m, nesta ordem, onde i é a primeira ocorrência da sequência que possui uma cópia na sequência 
- original e m é o tamanho desta sequência que se repete. Caso contrário seu programa deve imprimir "nenhuma".
+program lista7subsequencias;
 
-Os casos de teste não conterão entradas com mais de uma subsequência igual.
+type 
+    vetor = array [1..300]  of longint;
 
-Exemplo de entrada 1:
-87 9 5 4 5 5 4 6
-
-Saı́da esperada para a entrada acima:
-3 2
-
-Exemplo de entrada 2:
-12
-2 7 9 5 2 5 4 8 6 2 5 4
-
-Saı́da esperada para a entrada acima:
-5 3
-
-
-*)
-
-program subseq;
-
-type vetor = array[1..200] of longint;
-
-var
+var 
     entrada : vetor;
-    num, pos, seq : longint;
+    pos, num, tamanho_subsequencia, cont: longint;
 
-procedure lerVetor(var v : vetor; t : integer);
-var i,n : integer;
+
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+procedure lerVetor(var v : vetor; t : longint); // Procedimento que preenche um vetor de tamanho 't'
+var n,i : longint;
 begin
-    for i := 1 to t do
+    for i := 1 to t do 
     begin
         read(n);
         v[i] := n;
-    end;    
+    end; 
 end;
 
-(*
-procedure achaSequencia(v : vetor; s,n : longint);
-var 
-    aux : vetor;
-    i,j,c: integer;
-    igual : boolean;
-begin
-    for i := 1 to n - (s - 1) do 
-    begin
-        igual := true;
-        for j := 1 to s do
-        begin
-            aux[j] := v[i + (j - 1)];
-            write (aux[j],' ');
-        end;
-        writeln;    
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-        for c:= 1 to s+1 do
-        begin
-            for j:= 1 to s do 
-            begin
-                writeln(aux[j],'----',v[j+c]);
-            end;
-        writeln;
-        end;
-        writeln('__________________________________');
-    end;
-end;
-*)
-
-function achaSequencia(v:vetor; s,t:longint): longint;
+function acharSequencia(v : vetor; s,t : longint) : longint;
 var 
-    i: longint;
-    igual : boolean;
+    i,j,c : longint;
+    igual, continua : boolean;
 
 begin
-    igual := true;
-    i := 1;
-    while((i + s) <= t) and igual do 
+    i := 0;
+    igual := false;
+    continua := true;
+
+    while(i+s <= t) and continua do 
     begin
-        if v[i] <> v[i+s] then 
-            igual := false; 
+        j := i + s; 
+        while(j + s <= t) and not igual do 
+        begin
+            igual := true;
+
+            for c := 1 to s do
+                if v[i+c] <> v[j+c] then igual := false;       
+
+            j := j + 1;
+        
+        end;
+
+        if igual then 
+        begin
+            continua := false;
+            acharSequencia := i+1;
+        end
+        else
+            acharSequencia := 0;
+        i := i + 1;
+
     end;
-
-    //if igual then achaSequencia :=  else ach
-
 end;
 
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-begin 
-    pos := 0;
-    read(num);
-    lerVetor(entrada,num);
-    seq := num div 2;
-
-    while (pos = 0) and (seq >= 2) do 
-    begin
-        achaSequencia(entrada,seq,num);
-        seq := seq - 1;
-    end;
+begin
+    read(num);             // Le o tamanho do vetor a ser lido
+    lerVetor(entrada,num); // Chama o procedimento que vai ler todos os valores e armazenar no vetor
     
+    pos := 0;
+    cont := 2;
+    tamanho_subsequencia := num div 2;
+
+    while (tamanho_subsequencia >= 2) and (pos = 0) do 
+    begin
+        pos := acharSequencia(entrada,tamanho_subsequencia,num);
+        tamanho_subsequencia := tamanho_subsequencia - 1; 
+    end;
+
+    if pos = 0 then writeln('nenhuma') else writeln(pos, ' ', tamanho_subsequencia + 1);
+
 end.
