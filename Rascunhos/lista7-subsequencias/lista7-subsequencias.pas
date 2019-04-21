@@ -38,28 +38,24 @@ begin
         while(j + s <= t) and not igual do 
         begin
             igual := true;
+
             for c := 1 to s do
-            begin
-                //writeln(v[i+c],'-------',v[j+c]);
-                if v[i+c] <> v[j+c] then
-                     igual := false;       
-            end;
+                if v[i+c] <> v[j+c] then igual := false;       
+
             j := j + 1;
-           // writeln;
-        end;
         
+        end;
+
         if igual then 
         begin
             continua := false;
             acharSequencia := i+1;
         end
         else
-        begin
             acharSequencia := 0;
-        end;
         i := i + 1;
-    end;
 
+    end;
 end;
 
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
