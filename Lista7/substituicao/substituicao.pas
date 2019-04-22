@@ -6,6 +6,8 @@ var
     v1,v2,v3 : vetor;
     t1,t2,t3 : integer;
     pos_inicio, pos_final : integer;
+    i : integer;
+    diferente : boolean;
 
 
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -42,7 +44,7 @@ begin
     i := 0; 
     ocorre := false;
 
-    while (i + t2 < t1) and not ocorre do 
+    while (i + t2 <= t1) and not ocorre do 
     begin
         ocorre := true;
         for c:= 1 to t2 do 
@@ -52,45 +54,72 @@ begin
     if ocorre then 
     begin
         posi := i;
-        posf := i + t2;
-        writeln('POSI = ', posi, ' || POSF = ', posf);
+        posf := i + t2 - 1;
+        //writeln('POSI = ', posi, ' || POSF = ', posf);
     end;
 end;
 
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-procedure substituirVetor(var vet1,vet3 : vetor; pi, pf : integer);
+procedure substituirVetor(var v1, v3 : vetor;var t1 : integer; t3, pi, pf : integer);
 var 
-    i : integer;
+    i, indiceAux : integer;
+    aux : vetor;
+
 begin
-    for i := 0 to (pf-pi) do 
+    indiceAux := 1;
+
+    for i := 1 to pi-1 do 
     begin
-        vet1[pi + i] := vet3[i + 1];
+        aux[indiceAux] := v1[i];
+        indiceAux := indiceAux + 1;
+    end;
+    //write(' ');
+    for i := 1 to t3 do 
+    begin
+        aux[indiceAux] := v3[i];
+        indiceAux := indiceAux + 1;
+    end;
+    //write(' ');
+    for i:= pf to t1-1 do
+    begin
+        aux[indiceAux] := v1[i+1];
+        indiceAux := indiceAux + 1;
     end; 
+
+    imprimeVetor(aux,indiceAux-1);
+
 end;
 
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 begin
+    diferente:= true;
+    i:= 1;
+
     lerVetor(v1,t1);
     lerVetor(v2,t2);
     lerVetor(v3,t3);
-    //imprimeVetor(v1, t1);
-    //writeln;
-    //imprimeVetor(v2, t2);
-    //writeln;
-    //imprimeVetor(v3, t3);
-    //writeln;
 
-
-    if ocorre(v1, v2, t1, t2, pos_inicio,pos_final) then 
+    if (t1 = t2) then 
     begin
-        //writeln('SIM');
-        substituirVetor(v1,v3,pos_inicio, pos_final);
+        diferente:= false;
+        for i := 1 to t1 do 
+        begin
+            if (v1[i] <> v2[i]) then diferente := true;
+        end; 
     end;
 
-    //imprimeVetor(v1, t1);
-    imprimeVetor(v1, t1);
-    writeln;
-
+    if diferente then 
+    begin
+        if ocorre(v1, v2, t1, t2, pos_inicio,pos_final) then 
+        begin
+            //writeln('SIM');
+            substituirVetor(v1, v3, t1, t3, pos_inicio, pos_final);
+        end 
+        else 
+        imprimeVetor(v1, t1);
+        writeln;
+    end
+    else writeln('nenhuma');
 end.
