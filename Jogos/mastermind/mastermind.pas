@@ -26,7 +26,6 @@ begin
 	while c <= tamanhoSenha do 
 	begin
 		s := random(quantidadeCores) + 1;
-		//writeln(s, ' ', cores[s]);
 		if cores[s] <> 0 then
 		begin
 			senha[c] := cores[s];
@@ -34,7 +33,6 @@ begin
 			cores[s] := 0;
 		end;	
 	end;
-
 	//for i := 1 to tamanhoSenha do write(senha[i],' ');
 	writeln;
 
@@ -54,25 +52,18 @@ function conferirSenha(senha, jogada : vetor; var corC, corLugarC : integer) : b
 var
 	i,j  : integer;
 begin
-	for i :=1 to tamanhoSenha do
-	begin
+	for i := 1 to tamanhoSenha do
 		if senha[i] = jogada[i] then
 			corLugarC := corLugarC + 1;
-	end;	
 
 	corC := -1 * corLugarC;
 
 	for i := 1 to tamanhoSenha do
-	begin
 		for j := 1 to tamanhoSenha do 
-		begin
 			if senha[i] = jogada[j] then corC := corC + 1;
-		end;
-	end;
 
 	if corLugarC = tamanhoSenha then conferirSenha := true else conferirSenha := false;
 end;
-
 
 begin
 
@@ -85,6 +76,7 @@ begin
 	begin
 		corC := 0; corlugarC := 0; 
 		tentativas := tentativas + 1;
+
 		lerVetor(jogada);
 		acertou := conferirSenha(senha, jogada,corC, corlugarC);
 
@@ -92,9 +84,7 @@ begin
 		writeln('Cor e Lugar certo: ',corlugarC);
 		writeln('Somente cor certa: ',corC);
 
-
 		if not acertou then writeln('Tente novamente');
 	end;
-
 		writeln('Parabens!!! Voce levou ',tentativas,' tentativas para acertar a senha');
 end.
