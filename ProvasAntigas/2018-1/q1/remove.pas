@@ -28,7 +28,7 @@ begin
             pos := pos + 1;
             tam := tam - 1;
         end;
-    end;    
+    end;        
 end;
 
 begin
