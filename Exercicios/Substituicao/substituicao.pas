@@ -80,7 +80,7 @@ begin
 	if t2 > t3 then
 	begin
 		indice := pos_ini;
-		for i := 1 to t1-pos_fim do
+		for i := 1 to t1-pos_fim+1 do
 		begin
 			v1[indice] := v1[indice+(t2-t3)];
 			indice := indice + 1;
