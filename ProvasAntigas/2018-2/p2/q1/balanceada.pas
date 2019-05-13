@@ -87,6 +87,6 @@ begin
 
     writeln;
     if ehbalanceada then writeln('Sim eh balanceada') else writeln('Nao eh balanceada');
-    writeln;
+        writeln;
 
 end.
