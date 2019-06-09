@@ -2,6 +2,9 @@
 Pra fazer : 
     - Fazer as funções LerJogada e VerSeAcabou
     - Pensar em como implementar o Inunda com a pilha (visto em sala mas não lembro)
+    - Melhorar funções da pilha
+    - Limpar a tela entre jogadas
+    - Botar o contador de jogadas no imprimeTela
 
 Lembretes (Vagas lembraças da aula)
     cor_velha, cor_nova
@@ -11,13 +14,13 @@ Lembretes (Vagas lembraças da aula)
 program hehe;
 uses CRT;
 
-const MAX = 64;
+const MAX = 1000;
 
 type
     t_jogo = record
         tabuleiro : array [0..MAX+1,0..MAX+1] of integer;
-        n_jogadas,tamanho,cores,maxJogadas : integer;
-        acabou,ganhou : boolean;
+        n_jogadas,tamanho,cores,maxJogadas,cor_nova, cor_velha : integer;
+        acabou,ganhou,podeInundar : boolean;
 
     end;
 
@@ -70,7 +73,7 @@ begin
     randomize;
     for i := 1 to jogo.tamanho do 
         for j := 1 to jogo.tamanho do 
-            jogo.tabuleiro[i][j] := random(jogo.cores) + 1;
+            jogo.tabuleiro[i][j] := random(jogo.cores)+1;
 end;
 
 procedure inicializar_jogo(var jogo : t_jogo);
@@ -87,25 +90,87 @@ begin
     jogo.acabou := false;     // Controla o loop principal do jogo
     jogo.ganhou := false ;    // Alterado para true no verSeAcabou caso o jogador tenha ganho
     jogo.n_jogadas := 0;
+    jogo.cor_velha := jogo.tabuleiro[1][1];
 end;
 
-procedure lerJogada();
+procedure lerJogada(var jogo : t_jogo);
 begin
-    
+    jogo.podeInundar := false;
+    read(jogo.cor_nova);
+    if jogo.cor_nova <> jogo.tabuleiro[1][1] then
+    begin
+        jogo.n_jogadas := jogo.n_jogadas + 1;
+        jogo.podeInundar := true;
+    end; 
 end;
+
 procedure inundar(var jogo : t_jogo);
+var 
+    p : t_pilha;
+    e : t_elementoPilha;
 begin
-    
+    e.x := 1;
+    e.y := 1;
+    jogo.cor_velha := jogo.tabuleiro[1][1];
+    jogo.tabuleiro[1][1] := jogo.cor_nova;
+
+    p_inicializa(p);
+    push(p,e);
+
+    while not p_vazia(p) do 
+    begin
+        e := pop(p);
+
+        e.x := e.x - 1;
+        if (jogo.tabuleiro[e.x][e.y] = jogo.cor_velha) then
+        begin
+            jogo.tabuleiro[e.x][e.y] := jogo.cor_nova;
+            push(p,e);
+        end;
+
+        e.x := e.x + 2;
+        if (jogo.tabuleiro[e.x][e.y] = jogo.cor_velha) then
+        begin
+            jogo.tabuleiro[e.x][e.y] := jogo.cor_nova;
+            push(p,e);
+        end;
+
+        e.x := e.x - 1;
+        e.y := e.y + 1;
+        if (jogo.tabuleiro[e.x][e.y] = jogo.cor_velha) then
+        begin
+            jogo.tabuleiro[e.x][e.y] := jogo.cor_nova;
+            push(p,e);
+        end;
+
+        e.y := e.y - 2;
+        if (jogo.tabuleiro[e.x][e.y] = jogo.cor_velha) then
+        begin
+            jogo.tabuleiro[e.x][e.y] := jogo.cor_nova;
+            push(p,e);
+        end;
+
+
+    end;
+
+    if jogo.cor_nova <> jogo.cor_velha then
+    begin
+        
+    end;
 end;
+
 procedure imprimirTabuleiro(var jogo : t_jogo);
 var 
     i,j : integer;
 begin
+    clrscr;
+    writeln(jogo.n_jogadas,' / ',jogo.maxJogadas);
     for i := 1 to jogo.tamanho do 
     begin
         for j := 1 to jogo.tamanho do 
         begin
             textbackground(jogo.tabuleiro[i][j]);
+            //textcolor(jogo.tabuleiro[i][j]);
             write (' ', jogo.tabuleiro[i][j]);
         end;
         textbackground(black);
@@ -114,8 +179,22 @@ begin
 end;
 
 function verSeAcabou(var jogo : t_jogo) : boolean;
+var i,j : integer;
 begin
-    verSeAcabou := false;   
+    verSeAcabou := true;
+    for i := 1 to jogo.tamanho do 
+        for j := 1 to jogo.tamanho do 
+            if jogo.tabuleiro[i][j] <> jogo.tabuleiro[1][1] then
+                verSeAcabou := false;
+
+    if verSeAcabou then 
+        jogo.ganhou := true
+    else
+        if (jogo.n_jogadas >= jogo.maxJogadas) then 
+            begin
+                verSeAcabou := true;
+                jogo.ganhou := false;
+            end;
 end;
 
 (*===================================================================*)
@@ -124,17 +203,18 @@ end;
 
 begin
     inicializar_jogo(jogo);
+    imprimirTabuleiro(jogo);
 
     while not jogo.acabou do 
     begin
-        lerJogada();
-        inundar(jogo);
+        lerJogada(jogo);
+        if jogo.podeInundar then inundar(jogo);
         imprimirTabuleiro(jogo);
         jogo.acabou := verSeAcabou(jogo);
     end;
 
     if jogo.ganhou then
-        writeln('Parabens Voce Ganhou!') 
+        writeln('Parabens Voce Ganhou!')    
     else
         writeln('Parbens Voce Perdeu!!!!');
 
