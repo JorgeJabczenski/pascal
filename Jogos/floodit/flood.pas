@@ -202,6 +202,13 @@ end;
 (*===================================================================*)
 
 begin
+   Sound(1000);
+   Sound(500);
+   Delay(1000);
+   Sound(300);
+   Sound(150);
+   Delay(1000);
+   NoSound;
     inicializar_jogo(jogo);
     imprimirTabuleiro(jogo);
 
