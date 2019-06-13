@@ -218,7 +218,7 @@ function escolhe_cor (jogo: tipo_jogo): integer;
                escolhe_cor:= sorteia_cor (jogo,cor_velha);
      end;
 //------------------------------------------------------------------------------
-function inunda_vizinho_falso (jogo: tipo_jogo;cor_velha,cor_nova,x,y: integer): boolean;
+function inunda_vizinho_falso (var jogo: tipo_jogo;cor_velha,cor_nova,x,y: integer): boolean;
      begin
                inunda_vizinho_falso:= false;
                if jogo.matriz[x,y] = cor_velha then
@@ -232,7 +232,7 @@ function inunda_falso(jogo : tipo_jogo; cor : integer) : integer;
      var
           p: pilha;
           e: elemento;
-          cor_velha, i, j: integer;
+          cor_velha: integer;
      begin
           inunda_falso := 0;
           jogo.num_jogadas:= jogo.num_jogadas + 1;
@@ -247,24 +247,33 @@ function inunda_falso(jogo : tipo_jogo; cor : integer) : integer;
                e:= desempilha(p);
                e.x:= e.x - 1;
                if inunda_vizinho_falso (jogo,cor_velha,cor,e.x,e.y) then
+               begin
                     empilha (e,p);
+                    inunda_falso := inunda_falso + 1;
+               end;
+
                e.x:= e.x + 2;
                if inunda_vizinho_falso (jogo,cor_velha,cor,e.x,e.y) then
+               begin
                     empilha (e,p);
+                    inunda_falso := inunda_falso + 1;
+               end;
+
                e.x:= e.x - 1;
                e.y:= e.y - 1;
                if inunda_vizinho_falso (jogo,cor_velha,cor,e.x,e.y) then
+               begin
                     empilha (e,p);
+                    inunda_falso := inunda_falso + 1;
+               end;
+
                e.y:= e.y + 2;
                if inunda_vizinho_falso (jogo,cor_velha,cor,e.x,e.y) then
+               begin
                     empilha (e,p);
+                    inunda_falso := inunda_falso + 1;
+               end;
           end; 
-
-          for i := 1 to jogo.tam do 
-               for j := 1 to jogo.tam do 
-                    if jogo.matriz[i,j] = cor then
-                         inunda_falso := inunda_falso + 1;
-
      end;
 
 function melhor_jogada(jogo : tipo_jogo) : integer;
@@ -278,11 +287,19 @@ function melhor_jogada(jogo : tipo_jogo) : integer;
                if jogo.matriz[1,1] <> i then 
                begin
                     teste := inunda_falso(jogo,i);
+                    writeln('Se jogar a cor ',i,' voce vai inundar ',teste);
                     if teste > maior then
                     begin
                          maior := teste;
                          melhor_jogada := i;
                     end;
+               end;
+          end;
+          if melhor_jogada = 0 then
+          begin
+               while melhor_jogada <> jogo.matriz[1,1] do 
+               begin
+                    melhor_jogada := random(jogo.num_cores)+1;
                end;
           end;
      end;

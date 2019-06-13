@@ -104,6 +104,134 @@ begin
     end; 
 end;
 
+function inundarFalso(fjogo : t_jogo) : integer;
+var 
+    p : t_pilha;
+    e : t_elementoPilha;
+begin
+    inundarFalso := 1;
+    e.x := 1;
+    e.y := 1;
+    fjogo.cor_velha := fjogo.tabuleiro[1][1];
+    fjogo.tabuleiro[1][1] := fjogo.cor_nova;
+
+    p_inicializa(p);
+    push(p,e);
+
+    while not p_vazia(p) do 
+    begin
+        e := pop(p);
+
+        e.x := e.x - 1;
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) then
+        begin
+            fjogo.tabuleiro[e.x][e.y] := fjogo.cor_nova;
+            push(p,e);
+        end;
+
+        e.x := e.x + 2;
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) then
+        begin
+            fjogo.tabuleiro[e.x][e.y] := fjogo.cor_nova;
+            push(p,e);
+        end;
+
+        e.x := e.x - 1;
+        e.y := e.y + 1;
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) then
+        begin
+            fjogo.tabuleiro[e.x][e.y] := fjogo.cor_nova;
+            push(p,e);
+        end;
+
+        e.y := e.y - 2;
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) then
+        begin
+            fjogo.tabuleiro[e.x][e.y] := fjogo.cor_nova;
+            push(p,e);
+        end;
+    end;
+
+
+    e.x := 1;
+    e.y := 1;
+    fjogo.cor_velha := fjogo.tabuleiro[1][1];
+    fjogo.tabuleiro[1][1] := 0;
+
+    p_inicializa(p);
+    push(p,e);
+
+    while not p_vazia(p) do 
+    begin
+        e := pop(p);
+
+        e.x := e.x - 1;
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova ) then
+        begin
+            fjogo.tabuleiro[e.x][e.y] := 0;
+            push(p,e);
+            inundarFalso := inundarFalso + 1;
+        end;
+
+        e.x := e.x + 2;
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
+        begin
+            fjogo.tabuleiro[e.x][e.y] := 0;
+            push(p,e);
+            inundarFalso := inundarFalso + 1;
+        end;
+
+        e.x := e.x - 1;
+        e.y := e.y + 1;
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
+        begin
+            fjogo.tabuleiro[e.x][e.y] := 0;
+            push(p,e);
+            inundarFalso := inundarFalso + 1;
+        end;
+
+        e.y := e.y - 2;
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
+        begin
+            fjogo.tabuleiro[e.x][e.y] := 0;
+            push(p,e);
+            inundarFalso := inundarFalso + 1;
+        end;
+    end;
+
+end;
+
+procedure gerarJogada(var jogo : t_jogo);
+var 
+    i,maior,teste,corCerta: integer;
+begin
+    jogo.podeInundar := false;
+    maior := 0;
+
+    {CODIGO QUE GERA A JOGADA}
+    for i := 1 to jogo.cores do 
+    begin
+        if i <> jogo.tabuleiro[1][1] then 
+        begin
+            jogo.cor_nova := i;
+            teste := inundarFalso(jogo);
+            if teste > maior then
+            begin
+                maior := teste;
+                 corCerta:= i;
+            end;
+        end;
+    end;
+
+    jogo.cor_nova := corCerta;    
+
+    if jogo.cor_nova <> jogo.tabuleiro[1][1] then
+    begin
+        jogo.n_jogadas := jogo.n_jogadas + 1;
+        jogo.podeInundar := true;
+    end; 
+end;
+
 procedure inundar(var jogo : t_jogo);
 var 
     p : t_pilha;
@@ -152,28 +280,28 @@ begin
 
 
     end;
-
-    if jogo.cor_nova <> jogo.cor_velha then
-    begin
-        
-    end;
 end;
+
+
 
 procedure imprimirTabuleiro(var jogo : t_jogo);
 var 
     i,j : integer;
 begin
     clrscr;
+    lowvideo;
+    highvideo;
     writeln(jogo.n_jogadas,' / ',jogo.maxJogadas);
     for i := 1 to jogo.tamanho do 
     begin
         for j := 1 to jogo.tamanho do 
         begin
             textbackground(jogo.tabuleiro[i][j]);
-            //textcolor(jogo.tabuleiro[i][j]);
+            textcolor(jogo.tabuleiro[i][j]);
             write (' ', jogo.tabuleiro[i][j]);
         end;
         textbackground(black);
+        textcolor(white);
         writeln;
     end;
 end;
@@ -202,20 +330,21 @@ end;
 (*===================================================================*)
 
 begin
-   Sound(1000);
-   Sound(500);
-   Delay(1000);
-   Sound(300);
-   Sound(150);
-   Delay(1000);
-   NoSound;
+
     inicializar_jogo(jogo);
     imprimirTabuleiro(jogo);
 
     while not jogo.acabou do 
     begin
-        lerJogada(jogo);
-        if jogo.podeInundar then inundar(jogo);
+        //lerJogada(jogo);
+        gerarJogada(jogo);
+        if jogo.podeInundar then 
+        begin
+            writeln(inundarFalso(jogo));
+            inundar(jogo);
+            delay(100);
+        
+        end;
         imprimirTabuleiro(jogo);
         jogo.acabou := verSeAcabou(jogo);
     end;
