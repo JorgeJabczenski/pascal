@@ -123,50 +123,7 @@ begin
         e := pop(p);
 
         e.x := e.x - 1;
-        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) then
-        begin
-            fjogo.tabuleiro[e.x][e.y] := fjogo.cor_nova;
-            push(p,e);
-        end;
-
-        e.x := e.x + 2;
-        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) then
-        begin
-            fjogo.tabuleiro[e.x][e.y] := fjogo.cor_nova;
-            push(p,e);
-        end;
-
-        e.x := e.x - 1;
-        e.y := e.y + 1;
-        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) then
-        begin
-            fjogo.tabuleiro[e.x][e.y] := fjogo.cor_nova;
-            push(p,e);
-        end;
-
-        e.y := e.y - 2;
-        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) then
-        begin
-            fjogo.tabuleiro[e.x][e.y] := fjogo.cor_nova;
-            push(p,e);
-        end;
-    end;
-
-
-    e.x := 1;
-    e.y := 1;
-    fjogo.cor_velha := fjogo.tabuleiro[1][1];
-    fjogo.tabuleiro[1][1] := 0;
-
-    p_inicializa(p);
-    push(p,e);
-
-    while not p_vazia(p) do 
-    begin
-        e := pop(p);
-
-        e.x := e.x - 1;
-        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova ) then
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) or (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
         begin
             fjogo.tabuleiro[e.x][e.y] := 0;
             push(p,e);
@@ -174,7 +131,7 @@ begin
         end;
 
         e.x := e.x + 2;
-        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) or (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
         begin
             fjogo.tabuleiro[e.x][e.y] := 0;
             push(p,e);
@@ -183,7 +140,7 @@ begin
 
         e.x := e.x - 1;
         e.y := e.y + 1;
-        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) or (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
         begin
             fjogo.tabuleiro[e.x][e.y] := 0;
             push(p,e);
@@ -191,14 +148,13 @@ begin
         end;
 
         e.y := e.y - 2;
-        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
+        if (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_velha) or (fjogo.tabuleiro[e.x][e.y] = fjogo.cor_nova) then
         begin
             fjogo.tabuleiro[e.x][e.y] := 0;
             push(p,e);
             inundarFalso := inundarFalso + 1;
         end;
     end;
-
 end;
 
 procedure gerarJogada(var jogo : t_jogo);
@@ -277,8 +233,6 @@ begin
             jogo.tabuleiro[e.x][e.y] := jogo.cor_nova;
             push(p,e);
         end;
-
-
     end;
 end;
 
@@ -342,8 +296,7 @@ begin
         begin
             writeln(inundarFalso(jogo));
             inundar(jogo);
-            delay(100);
-        
+            delay(50);
         end;
         imprimirTabuleiro(jogo);
         jogo.acabou := verSeAcabou(jogo);
