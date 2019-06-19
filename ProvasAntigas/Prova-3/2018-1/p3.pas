@@ -119,7 +119,7 @@ begin
 
     for i := tamanho-1  downto 1 do 
     begin
-        for j := i downto 1 do 
+        for j := tamanho-1 downto 1 do 
         begin
             tX := tamanho-i+1;
             for k := tX downto 2 do 
